@@ -1,0 +1,51 @@
+-- INSTRUCTIONS
+-- In the DCS mission do a single trigger, time more (1) that does a DO SCRIPT event
+-- Paste this code into the DO SCRIPT:
+-- assert(loadfile("C:/HypeMan/Scripts_common_loader.lua"))()
+
+-- Script File Versions
+-- MOOSE GITHUB Commit Hash ID: 2021-06-14
+-- Mist version 4.3.74
+-- HypeMan version II.0
+-- Airboss and Spawn scripts no version
+
+scriptPath = "C:\\Hypeman\\"
+local theatre = env.mission.theatre
+env.info(theatre)
+local year = env.mission.date.Year
+
+USE_SWAPR = true
+
+assert(loadfile(scriptPath.."mist.lua"))()
+assert(loadfile(scriptPath.."Moose.lua"))()
+
+if theatre == "Caucasus" then
+assert(loadfile(scriptPath.."CAG_ScriptsBlackSea.lua"))()
+assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
+
+elseif theatre == "PersianGulf" then
+assert(loadfile(scriptPath.."CAG_ScriptsPG.lua"))()
+assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
+
+elseif theatre == "Nevada" then
+assert(loadfile(scriptPath.."CAG_ScriptsNellis.lua"))()
+
+elseif theatre == "MarianaIslands" then
+assert(loadfile(scriptPath.."CAG_ScriptsMIslands.lua"))()
+assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
+
+elseif theatre == "Falklands" then
+assert(loadfile(scriptPath.."CAG_ScriptsFalklands.lua"))()
+assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
+end
+
+
+
+if USE_SWAPR and theatre ~= "Falklands" then 
+function RunSWAPR(ourArgument, time)			
+	assert(loadfile(scriptPath.."Scripts_common_swapr.lua"))()
+   return nil
+end
+timer.scheduleFunction(RunSWAPR, 1, timer.getTime() + 15)
+end
+
