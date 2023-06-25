@@ -305,10 +305,11 @@ local zoneTankerLow=ZONE:New("Zone Tank Low")
 boomAltitude = 25000
 drogueAltitude = 24000
 tankerSpeed = 270
+AWACSSpeed = 300
 tankerTrackLength=15
 
 -- E-3A Magic 51 - 32,000' 251.000Mhz
-local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACSblue:GetCoordinate(), 32000, UTILS.KnotsToAltKIAS(300,30000), 360, 40)
+local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACSblue:GetCoordinate(), 32000, AWACSSpeed, 360, 40)
 auftragAWACS:SetTACAN(29, "DXS") 
 auftragAWACS:SetRadio(251.000)      
 local fsAWACS=FLIGHTGROUP:New("Magic")
@@ -316,7 +317,7 @@ fsAWACS:SetDefaultCallsign(CALLSIGN.AWACS.Magic, 5)
 fsAWACS:AddMission(auftragAWACS)
   
 -- E-3A Darkstar 51 - 32,000' 252.000Mhz
-local auftragredAWACS=AUFTRAG:NewAWACS(zoneAWACSred:GetCoordinate(), 32000, UTILS.KnotsToAltKIAS(300,30000), 360, 40)
+local auftragredAWACS=AUFTRAG:NewAWACS(zoneAWACSred:GetCoordinate(), 32000, AWACSSpeed, 360, 40)
 auftragredAWACS:SetTACAN(30, "DKS") 
 auftragredAWACS:SetRadio(252.000)      
 local fsRedAWACS=FLIGHTGROUP:New("Darkstar")
@@ -325,7 +326,7 @@ fsRedAWACS:AddMission(auftragredAWACS)
 
 ----------------North Tankers------------------------
 --KC-135 Arco (North) TCN 61Y - 25,000' 261.0MHz 
-local arcoNorth=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), boomAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,boomAltitude), 270, tankerTrackLength)
+local arcoNorth=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), boomAltitude, tankerSpeed, 270, tankerTrackLength)
 arcoNorth:SetTACAN(61, "ANB")
 arcoNorth:SetRadio(261)
 local arco41=FLIGHTGROUP:New("Arco North")
@@ -333,7 +334,7 @@ arco41:SetDefaultCallsign(CALLSIGN.Tanker.Arco, 4)
 arco41:Activate()
 arco41:AddMission(arcoNorth)
 --KC-135MPRS Texaco (North) TCN 62Y - 24,000' 262.0MHz
-local texNorth=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), drogueAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,drogueAltitude), 270, tankerTrackLength)
+local texNorth=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), drogueAltitude, tankerSpeed, 270, tankerTrackLength)
 texNorth:SetTACAN(62, "TND")
 texNorth:SetRadio(262)
 local tex31=FLIGHTGROUP:New("Texaco North")
@@ -343,7 +344,7 @@ tex31:AddMission(texNorth)
 
 ----------------West Tankers------------------------  
   --KC-135 Arco (West) TCN 63Y - 25,000' 263.0MHz 
-local arcoWest=AUFTRAG:NewTANKER(zoneTankerWest:GetCoordinate(), boomAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,boomAltitude), 150, tankerTrackLength)
+local arcoWest=AUFTRAG:NewTANKER(zoneTankerWest:GetCoordinate(), boomAltitude, tankerSpeed, 150, tankerTrackLength)
 arcoWest:SetTACAN(63, "AWB")
 arcoWest:SetRadio(263)
 local arco21=FLIGHTGROUP:New("Arco West")
@@ -351,7 +352,7 @@ arco21:SetDefaultCallsign(CALLSIGN.Tanker.Arco, 2)
 arco21:Activate()
 arco21:AddMission(arcoWest)
 --KC-135MPRS Texaco (North) TCN 64Y - 24,000' 264.0MHz
-local texWest=AUFTRAG:NewTANKER(zoneTankerWest:GetCoordinate(), drogueAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,drogueAltitude), 150, tankerTrackLength)
+local texWest=AUFTRAG:NewTANKER(zoneTankerWest:GetCoordinate(), drogueAltitude, tankerSpeed, 150, tankerTrackLength)
 texWest:SetTACAN(64, "TWD")
 texWest:SetRadio(264)
 local tex21=FLIGHTGROUP:New("Texaco West")
@@ -361,7 +362,7 @@ tex21:AddMission(texWest)
 
 ----------------East Tankers------------------------
 --KC-135 Arco (East) TCN 65Y - 25,000' 265.0MHz 
-local arcoEast=AUFTRAG:NewTANKER(zoneTankerEast:GetCoordinate(), boomAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,boomAltitude), 180, tankerTrackLength)
+local arcoEast=AUFTRAG:NewTANKER(zoneTankerEast:GetCoordinate(), boomAltitude, tankerSpeed, 180, tankerTrackLength)
 arcoEast:SetTACAN(65, "AEB")
 arcoEast:SetRadio(265)
 local arco31=FLIGHTGROUP:New("Arco East")
@@ -369,7 +370,7 @@ arco31:SetDefaultCallsign(CALLSIGN.Tanker.Arco, 3)
 arco31:Activate()
 arco31:AddMission(arcoEast)
 --KC-135MPRS Texaco (East) TCN 66Y - 24,000' 266.0MHz
-local texEast=AUFTRAG:NewTANKER(zoneTankerEast:GetCoordinate(), drogueAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,drogueAltitude), 180, tankerTrackLength)
+local texEast=AUFTRAG:NewTANKER(zoneTankerEast:GetCoordinate(), drogueAltitude, tankerSpeed, 180, tankerTrackLength)
 texEast:SetTACAN(66, "TED")
 texEast:SetRadio(266)
 local tex51=FLIGHTGROUP:New("Texaco East")
@@ -378,7 +379,7 @@ tex51:Activate()
 tex51:AddMission(texEast)
 
 --KC-130 Texaco (Low) TCN 55Y -12,000' 255.0 MHz
-local shellLow=AUFTRAG:NewTANKER(zoneTankerLow:GetCoordinate(), 12000, UTILS.KnotsToAltKIAS(tankerSpeed,12000), 035, 10)
+local shellLow=AUFTRAG:NewTANKER(zoneTankerLow:GetCoordinate(), 12000, tankerSpeed, 035, 10)
 shellLow:SetTACAN(55, "SHL")
 shellLow:SetRadio(255)
 local sh51=FLIGHTGROUP:New("Shell")
