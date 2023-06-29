@@ -2,12 +2,12 @@
 -- AIRBOSS --
 -------------------------
 superCarrier = Roosevelt
-cvnUnitName = "CVN-71 Theodore Roosevelt"
+cvUnitName = "CVN71"
 
 AIRBOSS.MenuF10Root=MENU_MISSION:New("Airboss").MenuPath
 _SETTINGS:SetPlayerMenuOff()
 
-local hightanker=RECOVERYTANKER:New(UNIT:FindByName(cvnUnitName), "Arco")
+local hightanker=RECOVERYTANKER:New(UNIT:FindByName(cvUnitName), "Arco")
 hightanker:SetTakeoffAir()
 hightanker:SetCallsign(CALLSIGN.Tanker.Arco, 7)
 hightanker:SetRadio(268)
@@ -18,7 +18,7 @@ hightanker:SetTACAN(55, "ARC")
 hightanker:SetSpeed(350)
 hightanker:Start()
 
-rescuehelo=RESCUEHELO:New(UNIT:FindByName(cvnUnitName), "Rescue Helo")
+rescuehelo=RESCUEHELO:New(UNIT:FindByName(cvUnitName), "Rescue Helo")
 rescuehelo:SetHomeBase(AIRBASE:FindByName("USS Ticonderoga"))
 rescuehelo:SetTakeoffAir()
 
@@ -28,7 +28,7 @@ rescuehelo:SetRescueZone(15)
 rescuehelo:SetModex(42)
 rescuehelo:__Start(4)
 
-tanker=RECOVERYTANKER:New(UNIT:FindByName(cvnUnitName), "Texaco")
+tanker=RECOVERYTANKER:New(UNIT:FindByName(cvUnitName), "Texaco")
 tanker:SetTakeoffHot()
 tanker:SetCallsign(CALLSIGN.Tanker.Texaco, 6)
 tanker:SetRadio(262)
@@ -47,14 +47,14 @@ tanker:__Start(3)
 -- awacs:SetTACAN(52, "WIZ")
 -- awacs:__Start(1)
 
-local superCarrier=AIRBOSS:New(cvnUnitName)
+local superCarrier=AIRBOSS:New(cvUnitName)
 
 local function cutPass()
   trigger.action.outSound("Airboss Soundfiles/GetYourButtsUptoVipersOffice.ogg")
 end
 
 local function underlinePass()
-  cvn = GROUP:FindByName( cvnUnitName )
+  cvn = GROUP:FindByName( cvUnitName )
   cvnZONE = ZONE_GROUP:New( "ZoneCVN", cvn, 100 )
   cvnZONE:FlareZone( FLARECOLOR.Red, 10, 60 )
   cvnZONE:FlareZone( FLARECOLOR.White, 10, 60 )
@@ -64,7 +64,7 @@ local function underlinePass()
 end
 
 local function underlinePassSH()
-  cvn = GROUP:FindByName( cvnUnitName )
+  cvn = GROUP:FindByName( cvUnitName )
   cvnZONE = ZONE_GROUP:New( "ZoneCVN", cvn, 100 )
   cvnZONE:FlareZone( FLARECOLOR.Red, 10, 60 )
   cvnZONE:FlareZone( FLARECOLOR.White, 10, 60 )
@@ -106,7 +106,7 @@ end
 
 superCarrier:SetMenuRecovery(60, 25, true, 0)
 superCarrier:Load()
-superCarrier:SetFunkManOn(10042)
+superCarrier:SetFunkManOn()
 superCarrier:SetAutoSave()
 superCarrier:SetTACAN(71, "X", "RHR")
 superCarrier:SetICLS(11,"RRI")
@@ -199,7 +199,7 @@ end
 
 forrestal:SetMenuRecovery(60, 25, true, 0)
 forrestal:Load()
-forrestal:SetFunkManOn(10042)
+forrestal:SetFunkManOn()
 forrestal:SetAutoSave()
 forrestal:SetTACAN(59, "X", "ZIP")
 forrestal:SetICLS(9,"FOR")
@@ -264,7 +264,7 @@ Tarawa:SetTACAN(108, "X", "LHA")
 Tarawa:SetTrapSheet()
 Tarawa:SetICLS(8)
 Tarawa:Load()
-Tarawa:SetFunkManOn(10042)
+Tarawa:SetFunkManOn()
 Tarawa:SetAutoSave()
 Tarawa:SetLineupErrorThresholds(.5,-.5,-1,-2,-4,1,2,4)
 Tarawa:SetStatusUpdateTime(1)
@@ -286,9 +286,10 @@ boomAltitude = 26000
 drogueAltitude = 25000
 tankerSpeed = 270
 tankerTrackLength=20
+awacsSpeed = 300
   
   -- E-3A Magic 51 - 32,000' 291.875Mhz
-local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACS:GetCoordinate(), 32000, UTILS.KnotsToAltKIAS(300,30000), 030, tankerTrackLength)
+local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACS:GetCoordinate(), 32000, awacsSpeed, 030, tankerTrackLength)
 auftragAWACS:SetTACAN(29, "DXS") 
 auftragAWACS:SetRadio(291.875)      
 local fsAWACS=FLIGHTGROUP:New("Magic")
@@ -335,7 +336,7 @@ tex21:AddMission(texSouth)
 
 -----Low Tankers------
 --KC-135 Texaco51 (Low Boom) TCN 57Y -12,000' 257.0 MHz
-local texLow=AUFTRAG:NewTANKER(zoneTankerSouth:GetCoordinate(), 12000, 250, 060, tankerTrackLength)
+local texLow=AUFTRAG:NewTANKER(zoneTankerSouth:GetCoordinate(), 12000, tankerSpeed, 060, tankerTrackLength)
 texLow:SetTACAN(57, "TXS")
 texLow:SetRadio(257)
 local tex51=FLIGHTGROUP:New("Texaco Low")
@@ -370,7 +371,7 @@ end
 
 -------------------Range script Sabakh-----------------
 RangeSabakh=RANGE:New("Sabakh Range")
-RangeSabakh:SetFunkManOn(10042)
+RangeSabakh:SetFunkManOn()
 RangeSabakh:AddBombingTargetGroup(GROUP:FindByName("Sabakh"), 50, false)
 bombTargetsSabakh = {'North-West Circle', 'North-East Circle', 'South-West Circle', 'South-East Circle'}
 RangeSabakh:AddBombingTargets(bombTargetsSabakh, 20, false)
@@ -378,13 +379,13 @@ RangeSabakh:Start()
 
 -------------------Range script-----------------
 RangeEMAL=RANGE:New("EMAL Range")
-RangeEMAL:SetFunkManOn(10042)
+RangeEMAL:SetFunkManOn()
 RangeEMAL:AddBombingTargetGroup(GROUP:FindByName("Plinking TGTS"), 50, false)
 RangeEMAL:Start()
 
 -------------------Sirri Range script-----------------
 RangeSirri=RANGE:New("Sirri Range")
-RangeSirri:SetFunkManOn(10042)
+RangeSirri:SetFunkManOn()
 RangeSirri:AddBombingTargetGroup(GROUP:FindByName("Iran Forces"), 50, false)
 RangeSirri:AddBombingTargetGroup(GROUP:FindByName("Iran Forces #001"), 50, false)
 RangeSirri:AddBombingTargetGroup(GROUP:FindByName("Iran Forces #002"), 50, false)
@@ -394,7 +395,7 @@ RangeSirri:Start()
 
 ------------------ Laser Range script-----------------
 RangeLaserRange=RANGE:New("Laser Range")
-RangeLaserRange:SetFunkManOn(10042)
+RangeLaserRange:SetFunkManOn()
 RangeLaserRange:AddBombingTargetGroup(GROUP:FindByName("Target1"), 50, false)
 RangeLaserRange:AddBombingTargetGroup(GROUP:FindByName("Target1 #001"), 50, false)
 RangeLaserRange:AddBombingTargetGroup(GROUP:FindByName("Target1 #002"), 50, false)
@@ -404,7 +405,7 @@ RangeLaserRange:Start()
 
 -------------------Range script-----------------
 bombingRange=RANGE:New("Abu Al Abyad Range")
-bombingRange:SetFunkManOn(10042)
+bombingRange:SetFunkManOn()
 bombTargets = {'target #001', 'target #002', 'target #003', 'target #004', 'target #005', 'target #006', 'target #007', 'target #008'}
 bombingRange:AddBombingTargets(bombTargets, 20, false)
 strafe_target_west = {'Strafe pit West'}

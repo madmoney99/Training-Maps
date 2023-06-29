@@ -104,7 +104,7 @@ function superCarrier:OnAfterLSOGrade(from, event, to, playerData, myGrade)
 end 
 superCarrier:SetMenuRecovery(60, 29, true, 0)
 superCarrier:Load()
-superCarrier:SetFunkManOn(10042)
+superCarrier:SetFunkManOn()
 superCarrier:SetTACAN(73, "X", "WFR")
 superCarrier:SetICLS(13,"GWW")
 superCarrier:SetLSORadio(265,AM)
@@ -215,7 +215,7 @@ end
 forrestal:SetMenuRecovery(60, 29, true, 0)
 forrestal:Load()
 forrestal:SetAutoSave()
-forrestal:SetFunkManOn(10042)
+forrestal:SetFunkManOn()
 forrestal:SetTACAN(58, "X", "ZIP")
 forrestal:SetICLS(17,"FOR")
 forrestal:SetLSORadio(265,AM)
@@ -276,7 +276,7 @@ function Tarawa:OnAfterLSOGrade(from, event, to, playerData, myGrade)
 end
 
 Tarawa:SetTACAN(108, "X", "LHA")
-Tarawa:SetFunkManOn(10042)
+Tarawa:SetFunkManOn()
 Tarawa:SetICLS(8)
 Tarawa:Load()
 Tarawa:SetLineupErrorThresholds(.5,-.5,-1,-2,-4,1,2,4)
@@ -321,20 +321,20 @@ end
 RangeJM=RANGE:New("Juan Mazia Range")
 RangeJM:SetRangeRadius(20)
 RangeJM:AddBombingTargetGroup(GROUP:FindByName("Russian Forces"), 50, false)
-RangeJM:SetFunkManOn(10042)
+RangeJM:SetFunkManOn()
 RangeJM:SetAutosaveOn()
 RangeJM:Start()
 
 RangeMPF=RANGE:New("Main Point Farm Range")
 RangeMPF:SetRangeRadius(20)
 RangeMPF:AddBombingTargetGroup(GROUP:FindByName("Russian Forces-1"), 50, false)
-RangeMPF:SetFunkManOn(10042)
+RangeMPF:SetFunkManOn()
 RangeMPF:SetAutosaveOn()
 RangeMPF:Start()
 
 RangeLR=RANGE:New("Laga Roca Range")
 RangeLR:SetRangeRadius(20)
-RangeLR:SetFunkManOn(10042)
+RangeLR:SetFunkManOn()
 RangeLR:AddBombingTargetGroup(GROUP:FindByName("Russian Forces-2"), 50, false)
 
 
@@ -348,10 +348,11 @@ boomAltitude = 25000
 drogueAltitude = 24000
 tankerSpeed = 270
 tankerTrackLength=15
+awacsSpeed = 300
 
 ---AWACS-----
 -- E-3A Magic 51 - 32,000' 251.000Mhz
-local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACS:GetCoordinate(), 32000, UTILS.KnotsToAltKIAS(300,30000), 125, 40)
+local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACS:GetCoordinate(), 32000, awacsSpeed, 125, 40)
 auftragAWACS:SetTACAN(29, "DXS") 
 auftragAWACS:SetRadio(251.000)      
 local fsAWACS=FLIGHTGROUP:New("Magic")
@@ -361,7 +362,7 @@ fsAWACS:AddMission(auftragAWACS)
 -----West Tankers -----
 
 --KC-135 Shell41 (West) TCN 65Y - 25,000' 265.0MHz (Hornet Ch.11)
-local shellWest=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), drogueAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,drogueAltitude), 180, tankerTrackLength)
+local shellWest=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), drogueAltitude, tankerSpeed, 180, tankerTrackLength)
 shellWest:SetTACAN(65, "SHN")
 shellWest:SetRadio(265)
 local shell41=FLIGHTGROUP:New("Shell West")
@@ -369,7 +370,7 @@ shell41:SetDefaultCallsign(CALLSIGN.Tanker.Shell, 4)
 shell41:Activate()
 shell41:AddMission(shellWest)
 --KC-135 Texaco31 (West Boom) TCN 61Y - 26,000' 261.0MHz
-local texWest=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), boomAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,boomAltitude), 180, tankerTrackLength)
+local texWest=AUFTRAG:NewTANKER(zoneTankerNorth:GetCoordinate(), boomAltitude, tankerSpeed, 180, tankerTrackLength)
 texWest:SetTACAN(61, "TXN")
 texWest:SetRadio(261)
 local tex31=FLIGHTGROUP:New("Texaco West")
@@ -379,7 +380,7 @@ tex31:AddMission(texWest)
 
 -----East Tankers------
 --KC-135 Shell21 (East) TCN 63Y - 25,000' 263.0MHz (Hornet Ch.15)
-local shellEast=AUFTRAG:NewTANKER(zoneTankerSouth:GetCoordinate(), drogueAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,drogueAltitude), 090, tankerTrackLength)
+local shellEast=AUFTRAG:NewTANKER(zoneTankerSouth:GetCoordinate(), drogueAltitude, tankerSpeed, 090, tankerTrackLength)
 shellEast:SetTACAN(63, "SHS")
 shellEast:SetRadio(263)
 local shell21=FLIGHTGROUP:New("Shell East")
@@ -388,7 +389,7 @@ shell21:Activate()
 shell21:AddMission(shellEast)
 
 --KC-135 Texaco21 (East Boom) TCN 67Y - 26,000' 267.0MHz
-local texEast=AUFTRAG:NewTANKER(zoneTankerSouth:GetCoordinate(), boomAltitude, UTILS.KnotsToAltKIAS(tankerSpeed,boomAltitude), 090, tankerTrackLength)
+local texEast=AUFTRAG:NewTANKER(zoneTankerSouth:GetCoordinate(), boomAltitude, tankerSpeed, 090, tankerTrackLength)
 texEast:SetTACAN(67, "TXS")
 texEast:SetRadio(267)
 local tex21=FLIGHTGROUP:New("Texaco East")
@@ -398,7 +399,7 @@ tex21:AddMission(texEast)
 
 -----Low Tankers------
 --KC-135 Texaco51 (Low Boom) TCN 57Y -12,000' 257.0 MHz
-local texLow=AUFTRAG:NewTANKER(zoneTankerLow:GetCoordinate(), 12000, UTILS.KnotsToAltKIAS(250,12000), 75, tankerTrackLength)
+local texLow=AUFTRAG:NewTANKER(zoneTankerLow:GetCoordinate(), 12000, tankerSpeed, 75, tankerTrackLength)
 texLow:SetTACAN(57, "TXS")
 texLow:SetRadio(257)
 local tex51=FLIGHTGROUP:New("Texaco Low")
