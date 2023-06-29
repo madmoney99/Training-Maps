@@ -294,6 +294,15 @@ bombingRange:AddStrafePit(strafe_target_east, 4000,350, nil, false, 20, 600)
 bombingRange:SetAutosaveOn()
 bombingRange:Start()
 
+bombing62Range=RANGE:New("Range Complex 62")
+bombing62Range:SetFunkManOn()
+bombing62Range:AddBombingTargetGroup(GROUP:FindByName("HARD TGT #001"), 50, false)
+bombing62Range:AddBombingTargetGroup(GROUP:FindByName("HARD TGT #002"), 50, false)
+bombing62Range:AddBombingTargetGroup(GROUP:FindByName("HARD TGT"), 50, false)
+bombing62Range:SetRangeRadius(15)
+bombing62Range:SetAutosaveOn()
+bombing62Range:Start()
+
 ---------------AWACS/big wing Tankers---------------------
 local zoneAWACSblue=ZONE:New("Zone AWACS BLUE")
 local zoneAWACSred=ZONE:New("Zone AWACS RED")
