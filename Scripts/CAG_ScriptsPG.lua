@@ -2,12 +2,12 @@
 -- AIRBOSS --
 -------------------------
 superCarrier = Roosevelt
-cvUnitName = "CVN71"
+cvnUnitName = "CVN-71 Theodore Roosevelt"
 
 AIRBOSS.MenuF10Root=MENU_MISSION:New("Airboss").MenuPath
 _SETTINGS:SetPlayerMenuOff()
 
-local hightanker=RECOVERYTANKER:New(UNIT:FindByName(cvUnitName), "Arco")
+local hightanker=RECOVERYTANKER:New(UNIT:FindByName(cvnUnitName), "Arco")
 hightanker:SetTakeoffAir()
 hightanker:SetCallsign(CALLSIGN.Tanker.Arco, 7)
 hightanker:SetRadio(268)
@@ -18,7 +18,7 @@ hightanker:SetTACAN(55, "ARC")
 hightanker:SetSpeed(350)
 hightanker:Start()
 
-rescuehelo=RESCUEHELO:New(UNIT:FindByName(cvUnitName), "Rescue Helo")
+rescuehelo=RESCUEHELO:New(UNIT:FindByName(cvnUnitName), "Rescue Helo")
 rescuehelo:SetHomeBase(AIRBASE:FindByName("USS Ticonderoga"))
 rescuehelo:SetTakeoffAir()
 
@@ -28,7 +28,7 @@ rescuehelo:SetRescueZone(15)
 rescuehelo:SetModex(42)
 rescuehelo:__Start(4)
 
-tanker=RECOVERYTANKER:New(UNIT:FindByName(cvUnitName), "Texaco")
+tanker=RECOVERYTANKER:New(UNIT:FindByName(cvnUnitName), "Texaco")
 tanker:SetTakeoffHot()
 tanker:SetCallsign(CALLSIGN.Tanker.Texaco, 6)
 tanker:SetRadio(262)
@@ -47,14 +47,14 @@ tanker:__Start(3)
 -- awacs:SetTACAN(52, "WIZ")
 -- awacs:__Start(1)
 
-local superCarrier=AIRBOSS:New(cvUnitName)
+local superCarrier=AIRBOSS:New(cvnUnitName)
 
 local function cutPass()
   trigger.action.outSound("Airboss Soundfiles/GetYourButtsUptoVipersOffice.ogg")
 end
 
 local function underlinePass()
-  cvn = GROUP:FindByName( cvUnitName )
+  cvn = GROUP:FindByName( cvnUnitName )
   cvnZONE = ZONE_GROUP:New( "ZoneCVN", cvn, 100 )
   cvnZONE:FlareZone( FLARECOLOR.Red, 10, 60 )
   cvnZONE:FlareZone( FLARECOLOR.White, 10, 60 )
@@ -64,7 +64,7 @@ local function underlinePass()
 end
 
 local function underlinePassSH()
-  cvn = GROUP:FindByName( cvUnitName )
+  cvn = GROUP:FindByName( cvnUnitName )
   cvnZONE = ZONE_GROUP:New( "ZoneCVN", cvn, 100 )
   cvnZONE:FlareZone( FLARECOLOR.Red, 10, 60 )
   cvnZONE:FlareZone( FLARECOLOR.White, 10, 60 )
