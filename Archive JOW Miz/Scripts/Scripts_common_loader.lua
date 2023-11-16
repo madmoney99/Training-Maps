@@ -19,7 +19,7 @@ local year = env.mission.date.Year
 USE_SWAPR = true
 
 assert(loadfile(scriptPath.."mist.lua"))()
-assert(loadfile(scriptPath.."Moose.lua"))()
+assert(loadfile(scriptPath.."MooseOldJOW.lua"))()
 assert(loadfile(scriptPath.."HypeMan_flightlog.lua"))()
 
 

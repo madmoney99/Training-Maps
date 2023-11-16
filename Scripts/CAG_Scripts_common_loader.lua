@@ -11,7 +11,9 @@
 
 scriptPath = "C:\\Hypeman\\"
 local theatre = env.mission.theatre
+assert(loadfile(scriptPath.."private_api_keys.lua"))()
 env.info(theatre)
+env.info(SERVERNAME)
 local year = env.mission.date.Year
 
 USE_SWAPR = true
@@ -37,8 +39,23 @@ assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
 elseif theatre == "Falklands" then
 assert(loadfile(scriptPath.."CAG_ScriptsFalklands.lua"))()
 assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
+
+elseif theatre == "Syria" then
+assert(loadfile(scriptPath.."CAG_ScriptsSyria.lua"))()
+assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
 end
 
+
+
+if SERVERNAME == "1CAG Backup" then
+ assert(loadfile(scriptPath.."Scripts_common_atis.lua"))()
+ elseif SERVERNAME == "1CAG - WHISKEY" then
+ assert(loadfile(scriptPath.."Scripts_common_atis.lua"))()
+ elseif SERVERNAME == "1CAG - EASY" then
+ assert(loadfile(scriptPath.."Scripts_common_atis.lua"))()
+ elseif SERVERNAME == "CAG Navy" then
+ assert(loadfile(scriptPath.."Scripts_common_atis.lua"))()
+ end
 
 
 if USE_SWAPR and theatre ~= "Falklands" then 
