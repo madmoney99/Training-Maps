@@ -7,7 +7,7 @@ Bombers = MENU_MISSION:New("Bomber Intercepts")
 
 A2G = MENU_MISSION:New( "Air to Ground Spawns")
 SAM = MENU_MISSION:New("SAM Range", A2G)
-menuJTAC = MENU_MISSION:New("JTAC Refresh", A2G)
+-- menuJTAC = MENU_MISSION:New("JTAC Refresh", A2G)
 
 
 menuFox=MENU_MISSION:New("Fox Trainer")
@@ -119,32 +119,32 @@ Ship2 = GROUP:FindByName( "ComNav-2" )
 Ship2:PatrolZones( { ZONE:New( "SShippingLane" ) }, 120, "Vee" )
 
 
--------JTAC respawn------------
-function launchJTAC1()
-  Spawn_JTAC1 = SPAWN:New("JTAC1688")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1688, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC1", menuJTAC, launchJTAC1 )
+-- -------JTAC respawn------------
+-- function launchJTAC1()
+  -- Spawn_JTAC1 = SPAWN:New("JTAC1688")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1688, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC1", menuJTAC, launchJTAC1 )
 
-function launchJTAC2()
-  Spawn_JTAC2 = SPAWN:New("JTAC1588")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1588, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC2", menuJTAC, launchJTAC2 )
+-- function launchJTAC2()
+  -- Spawn_JTAC2 = SPAWN:New("JTAC1588")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1588, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC2", menuJTAC, launchJTAC2 )
 
 ------------------Fox Missile Trainer-------------
 -- Protect all blue AI.

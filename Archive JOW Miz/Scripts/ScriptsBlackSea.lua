@@ -528,29 +528,29 @@ Tarawa:SetMenuRecovery(60, 20, true)
 Tarawa:Start()
 
 -------JTAC Initial Spawn------------
-do
-Spawn_JTAC1 = SPAWN:New("JTAC1688")
-Spawn_JTAC1:InitKeepUnitNames(true)
-Spawn_JTAC1:InitLimit(1,0)
-Spawn_JTAC1:InitDelayOn()
-Spawn_JTAC1:OnSpawnGroup(
-  function( SpawnGroup1688 )
-	ctld.JTACAutoLase(SpawnGroup1688.GroupName, 1688, false, "all")
-  end
-)
-Spawn_JTAC1:SpawnScheduled( 60,0 )
+-- do
+-- Spawn_JTAC1 = SPAWN:New("JTAC1688")
+-- Spawn_JTAC1:InitKeepUnitNames(true)
+-- Spawn_JTAC1:InitLimit(1,0)
+-- Spawn_JTAC1:InitDelayOn()
+-- Spawn_JTAC1:OnSpawnGroup(
+  -- function( SpawnGroup1688 )
+	-- ctld.JTACAutoLase(SpawnGroup1688.GroupName, 1688, false, "all")
+  -- end
+-- )
+-- Spawn_JTAC1:SpawnScheduled( 60,0 )
 
-Spawn_JTAC2 = SPAWN:New("JTAC1588")
-Spawn_JTAC2:InitKeepUnitNames(true)
-Spawn_JTAC2:InitLimit(1,0)
-Spawn_JTAC2:InitDelayOn()
-Spawn_JTAC2:OnSpawnGroup(
-  function( SpawnGroup1588 )
-	ctld.JTACAutoLase(SpawnGroup1588.GroupName, 1588, false, "all")
-  end
-)
-Spawn_JTAC2:SpawnScheduled( 60,0 )
-end
+-- Spawn_JTAC2 = SPAWN:New("JTAC1588")
+-- Spawn_JTAC2:InitKeepUnitNames(true)
+-- Spawn_JTAC2:InitLimit(1,0)
+-- Spawn_JTAC2:InitDelayOn()
+-- Spawn_JTAC2:OnSpawnGroup(
+  -- function( SpawnGroup1588 )
+	-- ctld.JTACAutoLase(SpawnGroup1588.GroupName, 1588, false, "all")
+  -- end
+-- )
+-- Spawn_JTAC2:SpawnScheduled( 60,0 )
+-- end
 
 --------------DiscordRangeReporting------------
 playerAltForRangeData = "altitudeNotSet!"

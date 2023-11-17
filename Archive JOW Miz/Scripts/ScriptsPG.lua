@@ -599,30 +599,30 @@ tex51:SetDefaultCallsign(CALLSIGN.Tanker.Texaco, 5)
 tex51:Activate()
 tex51:AddMission(texLow)
 
---------------------JTAC initial Spawn-------------------
-do
-  Spawn_JTAC1 = SPAWN:New("JTAC1388")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :InitDelayOn()
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
+-- --------------------JTAC initial Spawn-------------------
+-- do
+  -- Spawn_JTAC1 = SPAWN:New("JTAC1388")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :InitDelayOn()
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
 
-  Spawn_JTAC2 = SPAWN:New("JTAC1688")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :InitDelayOn()
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1688, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
+  -- Spawn_JTAC2 = SPAWN:New("JTAC1688")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :InitDelayOn()
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1688, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
 
 -------------------Range script Sabakh-----------------
 RangeSabakh=RANGE:New("Sabakh Range")

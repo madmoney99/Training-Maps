@@ -129,45 +129,45 @@ for i=1,6 do
 end
 MENU_MISSION_COMMAND:New ("Remove Spawned SAM Sites", SAM, destroySAM)
 
--------JTAC respawn------------
-function launchJTAC1()
-  Spawn_JTAC1 = SPAWN:New("JTAC1")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC1", menuJTAC, launchJTAC1 )
+-- -------JTAC respawn------------
+-- function launchJTAC1()
+  -- Spawn_JTAC1 = SPAWN:New("JTAC1")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC1", menuJTAC, launchJTAC1 )
 
-function launchJTAC2()
-  Spawn_JTAC2 = SPAWN:New("JTAC2")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1488, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC2", menuJTAC, launchJTAC2 )
+-- function launchJTAC2()
+  -- Spawn_JTAC2 = SPAWN:New("JTAC2")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1488, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC2", menuJTAC, launchJTAC2 )
 
-function launchJTAC3()
-  Spawn_JTAC3 = SPAWN:New("JTAC3")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1588, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC3", menuJTAC, launchJTAC3 )
+-- function launchJTAC3()
+  -- Spawn_JTAC3 = SPAWN:New("JTAC3")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1588, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC3", menuJTAC, launchJTAC3 )
 
 ------------------Fox Missile Trainer-------------
 
@@ -649,37 +649,37 @@ local sh51=FLIGHTGROUP:New("Shell")
 sh51:SetDefaultCallsign(CALLSIGN.Tanker.Shell, 5)
 sh51:Activate()
 sh51:AddMission(shellLow)
--------------JTAC initial Spawn--------------
+-- -------------JTAC initial Spawn--------------
 
-Spawn_JTAC1 = SPAWN:New("JTAC1388")
-Spawn_JTAC1:InitKeepUnitNames(true)
-Spawn_JTAC1:InitLimit(1,0)
-Spawn_JTAC1:InitDelayOn()
-Spawn_JTAC1:OnSpawnGroup(
-  function( SpawnGroup1 )
-	ctld.JTACAutoLase(SpawnGroup1.GroupName, 1388, false, "all")
-  end
-)
-Spawn_JTAC1:SpawnScheduled( 60,0 )
+-- Spawn_JTAC1 = SPAWN:New("JTAC1388")
+-- Spawn_JTAC1:InitKeepUnitNames(true)
+-- Spawn_JTAC1:InitLimit(1,0)
+-- Spawn_JTAC1:InitDelayOn()
+-- Spawn_JTAC1:OnSpawnGroup(
+  -- function( SpawnGroup1 )
+	-- ctld.JTACAutoLase(SpawnGroup1.GroupName, 1388, false, "all")
+  -- end
+-- )
+-- Spawn_JTAC1:SpawnScheduled( 60,0 )
 
-Spawn_JTAC2 = SPAWN:New("JTAC1488")
-Spawn_JTAC2:InitKeepUnitNames(true)
-Spawn_JTAC2:InitLimit(1,0)
-Spawn_JTAC2:InitDelayOn()
-Spawn_JTAC2:OnSpawnGroup(
-  function( SpawnGroup2 )
-	ctld.JTACAutoLase(SpawnGroup2.GroupName, 1488, false, "all")
-  end
-)
-Spawn_JTAC2:SpawnScheduled( 60,0 )
+-- Spawn_JTAC2 = SPAWN:New("JTAC1488")
+-- Spawn_JTAC2:InitKeepUnitNames(true)
+-- Spawn_JTAC2:InitLimit(1,0)
+-- Spawn_JTAC2:InitDelayOn()
+-- Spawn_JTAC2:OnSpawnGroup(
+  -- function( SpawnGroup2 )
+	-- ctld.JTACAutoLase(SpawnGroup2.GroupName, 1488, false, "all")
+  -- end
+-- )
+-- Spawn_JTAC2:SpawnScheduled( 60,0 )
 
-Spawn_JTAC3 = SPAWN:New("JTAC1588")
-Spawn_JTAC3:InitKeepUnitNames(true)
-Spawn_JTAC3:InitLimit(1,0)
-Spawn_JTAC3:InitDelayOn()
-Spawn_JTAC3:OnSpawnGroup(
-  function( SpawnGroup3 )
-	ctld.JTACAutoLase(SpawnGroup3.GroupName, 1588, false, "all")
-  end
-)
-Spawn_JTAC3:SpawnScheduled( 60,0 )
+-- Spawn_JTAC3 = SPAWN:New("JTAC1588")
+-- Spawn_JTAC3:InitKeepUnitNames(true)
+-- Spawn_JTAC3:InitLimit(1,0)
+-- Spawn_JTAC3:InitDelayOn()
+-- Spawn_JTAC3:OnSpawnGroup(
+  -- function( SpawnGroup3 )
+	-- ctld.JTACAutoLase(SpawnGroup3.GroupName, 1588, false, "all")
+  -- end
+-- )
+-- Spawn_JTAC3:SpawnScheduled( 60,0 )

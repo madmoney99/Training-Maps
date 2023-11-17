@@ -9,7 +9,7 @@ A2G = MENU_MISSION:New( "Air to Ground Spawns")
 SAM = MENU_MISSION:New("SAM Range", A2G)
 AR_menu_root = MENU_MISSION:New("Armed Recon",A2G)
 RANGE.MenuF10Root=MENU_MISSION:New("Basic Ranges",A2G).MenuPath
-menuJTAC = MENU_MISSION:New("JTAC Refresh", A2G)
+--menuJTAC = MENU_MISSION:New("JTAC Refresh", A2G)
 naval_menu = MENU_MISSION:New("Naval Ops", A2G)
 
 menuFox=MENU_MISSION:New("Fox Trainer")
@@ -160,32 +160,32 @@ MENU_MISSION_COMMAND:New ("Remove Spawned SAM Sites", SAM, destroySAM)
 -- end
 -- alertLaunch = MENU_MISSION_COMMAND:New ("Launch the Alert Aircraft", mainMenu, launchEvent )
 
--------JTAC respawn------------
-function launchJTAC1()
-  Spawn_JTAC1 = SPAWN:New("JTAC1")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC1", menuJTAC, launchJTAC1 )
+-- -------JTAC respawn------------
+-- function launchJTAC1()
+  -- Spawn_JTAC1 = SPAWN:New("JTAC1")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC1", menuJTAC, launchJTAC1 )
 
-function launchJTAC2()
-  Spawn_JTAC2 = SPAWN:New("JTAC2")
-    :InitKeepUnitNames(true)
-    :InitLimit(1,0)
-    :OnSpawnGroup(
-      function( SpawnGroup )
-        ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
-      end
-    )
-    :SpawnScheduled( 60,0 )
-end
-MENU_MISSION_COMMAND:New ("Relaunch JTAC2", menuJTAC, launchJTAC2 )
+-- function launchJTAC2()
+  -- Spawn_JTAC2 = SPAWN:New("JTAC2")
+    -- :InitKeepUnitNames(true)
+    -- :InitLimit(1,0)
+    -- :OnSpawnGroup(
+      -- function( SpawnGroup )
+        -- ctld.JTACAutoLase(SpawnGroup.GroupName, 1388, false, "all")
+      -- end
+    -- )
+    -- :SpawnScheduled( 60,0 )
+-- end
+-- MENU_MISSION_COMMAND:New ("Relaunch JTAC2", menuJTAC, launchJTAC2 )
 
 ------------------Fox Missile Trainer-------------
 -- Protect all blue AI.
