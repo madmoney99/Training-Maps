@@ -1,7 +1,7 @@
 -- INSTRUCTIONS
 -- In the DCS mission do a single trigger, time more (1) that does a DO SCRIPT event
 -- Paste this code into the DO SCRIPT:
--- assert(loadfile("C:/HypeMan/Scripts_common_loader.lua"))()
+-- assert(loadfile("C:/HypeMan/CAG_Scripts_common_loader.lua"))()
 
 -- Script File Versions
 -- MOOSE GITHUB Commit Hash ID: 2021-06-14
@@ -42,6 +42,10 @@ assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
 
 elseif theatre == "Syria" then
 assert(loadfile(scriptPath.."CAG_ScriptsSyria.lua"))()
+assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
+
+elseif theatre == "Kola" then
+assert(loadfile(scriptPath.."CAG_ScriptsKola.lua"))()
 assert(loadfile(scriptPath.."Scripts_common_carrierSpawns.lua"))()
 end
 

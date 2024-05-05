@@ -13,7 +13,10 @@ if theatre == "Caucasus" then
  shipIDForrestal = 178
  elseif theatre == "Syria" then
  shipID = 159
- shipIDForrestal = 971 
+ shipIDForrestal = 971
+ elseif theatre == "Kola" then
+ shipID = 115
+ shipIDForrestal = 122  
  end
 
 function spawnLaunch()
@@ -2951,7 +2954,11 @@ function addCarrierStaticMenu()
  elseif theatre == "MarianaIslands" then
  staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)
  elseif theatre == "Falklands" then
- staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)  
+ staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)
+ elseif theatre == "Syria" then
+ staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)   
+ elseif theatre == "Kola" then
+ staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)
  end
   
   MENU_MISSION_COMMAND:New ("CVN Launch Layout On", staticSpawns, spawnLaunch)
