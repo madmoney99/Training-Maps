@@ -234,9 +234,9 @@ A2ADispatcher:SetBorderZone( REDFORBorderZone )
 A2ADispatcher:SetEngageRadius( 200000 )
 
 -- Setup the squadrons.
-A2ADispatcher:SetSquadron( "REDFOR 1", AIRBASE.Nevada.Tonopah_Test_Range_Airfield, "REDFOR 1" )
---A2ADispatcher:SetSquadron( "REDFOR 2", AIRBASE.Nevada.Tonopah_Test_Range_Airfield, "REDFOR 2", 1 )
-A2ADispatcher:SetSquadron( "REDFOR 3", AIRBASE.Nevada.Mina_Airport , "REDFOR 3" )
+A2ADispatcher:SetSquadron( "REDFOR 1", AIRBASE.Nevada.Tonopah_Test_Range , "REDFOR 1" )
+--A2ADispatcher:SetSquadron( "REDFOR 2", AIRBASE.Nevada.Tonopah_Test_Range, "REDFOR 2", 1 )
+A2ADispatcher:SetSquadron( "REDFOR 3", AIRBASE.Nevada.Mina , "REDFOR 3" )
 
 -- Setup the overhead
 A2ADispatcher:SetSquadronOverhead( "REDFOR 1", 0.75 )
