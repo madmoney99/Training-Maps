@@ -16,7 +16,9 @@ if theatre == "Caucasus" then
  shipIDForrestal = 971
  elseif theatre == "Kola" then
  shipID = 115
- shipIDForrestal = 122  
+ shipIDForrestal = 122 
+ elseif theatre == "GermanyCW" then
+ shipID = 487 
  end
 
 function spawnLaunch()
@@ -2958,6 +2960,8 @@ function addCarrierStaticMenu()
  elseif theatre == "Syria" then
  staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)   
  elseif theatre == "Kola" then
+ staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)
+ elseif theatre == "GermanyCW" then
  staticSpawns = MENU_MISSION:New( "Carrier Deck Layout", adminMenu)
  end
   
