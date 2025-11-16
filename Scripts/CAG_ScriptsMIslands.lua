@@ -112,7 +112,6 @@ superCarrier:Load()
 superCarrier:SetAutoSave()
 superCarrier:SetTrapSheet()
 superCarrier:SetFunkManOn()
-superCarrier:SetIntoWindLegacy()
 superCarrier:SetTACAN(75, "X", "WFR")
 superCarrier:SetICLS(15,"GWW")
 superCarrier:SetLSORadio(265,AM)
@@ -205,7 +204,6 @@ end
 forrestal:SetMenuRecovery(60, 29, true, 0)
 forrestal:Load()
 forrestal:SetAutoSave()
-forrestal:SetIntoWindLegacy()
 forrestal:SetFunkManOn()
 forrestal:SetTACAN(58, "X", "ZIP")
 forrestal:SetICLS(17,"FOR")
@@ -442,7 +440,11 @@ a2aTable = {
 "Mig-23 Section", 
 "Mig-23 Division",
 "Mig-29 Section", 
-"Mig-29 Division"
+"Mig-29 Division",
+"F-16BFM",
+"F-15BFM",
+"F-14BFM",
+"F-4BFM"
 }
 
 redAIR = {}
