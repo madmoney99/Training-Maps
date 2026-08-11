@@ -1,7 +1,15 @@
 -------------------------
 -- AIRBOSS --
 -------------------------
-superCarrier = Washington
+-- CLEANUP NOTES (2026-08-10):
+-- * Removed an obsolete global assignment that was immediately shadowed by the AIRBOSS object.
+-- * Fixed duplicate Forrestal AIRBOSS construction.
+-- * Fixed JTAC spawned-group references.
+-- * Changed spawned-target bookkeeping so every spawned group can be removed, not just the most recent per type.
+-- * Added nil/function guards around optional external integrations and FOX controls.
+-- * Localized temporary callback variables to avoid cross-callback global contamination.
+-- * Frequencies/TACAN/ICLS values are intentionally NOT changed here. Reconcile those separately with the published comm card.
+
 cvnUnitName = "CVN-73 USS George Washington"
 
 AIRBOSS.MenuF10Root=MENU_MISSION:New("Airboss").MenuPath
@@ -49,21 +57,22 @@ awacs:__Start(1)
 local superCarrier=AIRBOSS:New(cvnUnitName)
 
 function superCarrier:OnAfterLSOGrade(from, event, to, playerData, myGrade)
-    player_name = playerData.name:gsub('[%p]', '')
+    local player_name = playerData.name:gsub('[%p]', '')
     --[...] -- do some magic in here, like SH break, etc.
-    trapsheet = "AIRBOSS-trapsheet-" .. player_name
+    local trapsheet = "AIRBOSS-trapsheet-" .. player_name
     superCarrier:SetTrapSheet(nil, trapsheet)
     --[...]
     self:_SaveTrapSheet(playerData, myGrade)
 		if playerData.wire == 1 then
 		myGrade.points = myGrade.points -1.00
-		oneWireMessage = {}
-		oneWireMessage = ('**'..player_name..' almost had a rampstrike with that 1-wire!**')
+        local oneWireMessage = ('**'..player_name..' almost had a rampstrike with that 1-wire!**')
 		-- dcsbot.sendBotTable(oneWireMessage)
-		oneWireMessageSocket=SOCKET:New()
-		oneWireMessageSocket:SendText(oneWireMessage)
+        if SOCKET then
+          local oneWireMessageSocket = SOCKET:New()
+          oneWireMessageSocket:SendText(oneWireMessage)
+        end
 		end	
-    msg = {}
+    local msg = {}
     msg.command = "onMissionEvent"
     msg.eventName = "S_EVENT_AIRBOSS"
     msg.initiator = {}
@@ -76,7 +85,9 @@ function superCarrier:OnAfterLSOGrade(from, event, to, playerData, myGrade)
     msg.wire = playerData.wire
     msg.trapsheet = trapsheet
     msg.time = timer.getTime()
-    dcsbot.sendBotTable(msg)
+    if dcsbot and dcsbot.sendBotTable then
+      dcsbot.sendBotTable(msg)
+    end
 end 
 -- function superCarrier:OnAfterLSOGrade(From, Event, To, playerData, myGrade)
   -- local string_grade = myGrade.grade
@@ -106,6 +117,7 @@ superCarrier:SetFunkManOn()
 superCarrier:SetAutoSave()
 superCarrier:SetTACAN(73, "X", "WFR")
 superCarrier:SetICLS(13,"GWW")
+-- NOTE: 265 MHz is also used elsewhere in this mission; review frequency deconfliction separately.
 superCarrier:SetLSORadio(265,AM)
 superCarrier:SetMarshalRadio(264, AM)
 superCarrier:SetPatrolAdInfinitum()
@@ -128,7 +140,9 @@ end
 function superCarrier:OnAfterRecoveryStart(Event, From, To, Case, Offset)
   env.info(string.format("Starting Recovery Case %d ops.", Case))
   timer.scheduleFunction(play_recovery_sound, {}, timer.getTime() + 10)
-  spawnsAllOff()
+  if type(spawnsAllOff) == "function" then
+    spawnsAllOff()
+  end
 end
 
 -- Start airboss class.
@@ -161,21 +175,22 @@ forrestalTanker:__Start(3)
 ---Forrestal Airboss---
 local forrestal=AIRBOSS:New(cvUnitName)
 function forrestal:OnAfterLSOGrade(from, event, to, playerData, myGrade)
-    player_name = playerData.name:gsub('[%p]', '')
+    local player_name = playerData.name:gsub('[%p]', '')
     --[...] -- do some magic in here, like SH break, etc.
-    trapsheet = "AIRBOSS-trapsheet-" .. player_name
+    local trapsheet = "AIRBOSS-trapsheet-" .. player_name
     forrestal:SetTrapSheet(nil, trapsheet)
     --[...]
     self:_SaveTrapSheet(playerData, myGrade)
 		if playerData.wire == 1 then
 		myGrade.points = myGrade.points -1.00
-		oneWireMessage = {}
-		oneWireMessage = ('**'..player_name..' almost had a rampstrike with that 1-wire!**')
+        local oneWireMessage = ('**'..player_name..' almost had a rampstrike with that 1-wire!**')
 		-- dcsbot.sendBotTable(oneWireMessage)
-		oneWireMessageSocket=SOCKET:New()
-		oneWireMessageSocket:SendText(oneWireMessage)
+        if SOCKET then
+          local oneWireMessageSocket = SOCKET:New()
+          oneWireMessageSocket:SendText(oneWireMessage)
+        end
 		end	
-    msg = {}
+    local msg = {}
     msg.command = "onMissionEvent"
     msg.eventName = "S_EVENT_AIRBOSS"
     msg.initiator = {}
@@ -188,15 +203,20 @@ function forrestal:OnAfterLSOGrade(from, event, to, playerData, myGrade)
     msg.wire = playerData.wire
     msg.trapsheet = trapsheet
     msg.time = timer.getTime()
-    dcsbot.sendBotTable(msg)
+    if dcsbot and dcsbot.sendBotTable then
+      dcsbot.sendBotTable(msg)
+    end
 end
 
-local forrestal=AIRBOSS:New(cvUnitName)
+-- Reuse the Forrestal AIRBOSS object created above so its callbacks remain attached.
+
 forrestal:SetMenuRecovery(60, 25, true, 0)
 forrestal:Load()
 forrestal:SetFunkManOn()
+-- NOTE: Published kneeboard/comm-card values should be reconciled with these AIRBOSS values.
 forrestal:SetTACAN(58, "X", "ZIP")
 forrestal:SetICLS(17,"FOR")
+-- NOTE: 265 MHz is also used elsewhere in this mission; review frequency deconfliction separately.
 forrestal:SetLSORadio(265,AM)
 forrestal:SetMarshalRadio(259, AM)
 forrestal:SetPatrolAdInfinitum()
@@ -211,13 +231,15 @@ forrestal:SetDespawnOnEngineShutdown()
 forrestal:SetMenuSingleCarrier(false)
 forrestal:SetExcludeAI(CarrierExcludeSet)
 --- Function called when recovery starts.
-local function play_recovery_sound()
+local function play_forrestal_recovery_sound()
   trigger.action.outSound("Airboss Soundfiles/BossRecoverAircraft.ogg")
 end
 function forrestal:OnAfterRecoveryStart(Event, From, To, Case, Offset)
   env.info(string.format("Starting Recovery Case %d ops.", Case))
-  timer.scheduleFunction(play_recovery_sound, {}, timer.getTime() + 10)
-  spawnsCVOff()
+  timer.scheduleFunction(play_forrestal_recovery_sound, {}, timer.getTime() + 10)
+  if type(spawnsCVOff) == "function" then
+    spawnsCVOff()
+  end
 end
 forrestal:Start()
 
@@ -226,13 +248,13 @@ forrestal:Start()
 
 local Tarawa=AIRBOSS:New("Tarawa")
 function Tarawa:OnAfterLSOGrade(from, event, to, playerData, myGrade)
-    player_name = playerData.name:gsub('[%p]', '')
+    local player_name = playerData.name:gsub('[%p]', '')
     --[...] -- do some magic in here, like SH break, etc.
-    trapsheet = "AIRBOSS-trapsheet-" .. player_name
+    local trapsheet = "AIRBOSS-trapsheet-" .. player_name
     Tarawa:SetTrapSheet(nil, trapsheet)
     --[...]
     self:_SaveTrapSheet(playerData, myGrade)
-    msg = {}
+    local msg = {}
     msg.command = "onMissionEvent"
     msg.eventName = "S_EVENT_AIRBOSS"
     msg.initiator = {}
@@ -245,9 +267,12 @@ function Tarawa:OnAfterLSOGrade(from, event, to, playerData, myGrade)
     msg.wire = playerData.wire
     msg.trapsheet = trapsheet
     msg.time = timer.getTime()
-    dcsbot.sendBotTable(msg)
+    if dcsbot and dcsbot.sendBotTable then
+      dcsbot.sendBotTable(msg)
+    end
 end
 Tarawa:SetFunkManOn()
+-- NOTE: Published kneeboard/comm-card values should be reconciled with these AIRBOSS values.
 Tarawa:SetTACAN(108, "X", "LHA")
 Tarawa:SetICLS(8)
 Tarawa:Load()
@@ -271,8 +296,8 @@ Spawn_JTAC1:InitLimit(1,0)
 Spawn_JTAC1:InitDelayOn()
 Spawn_JTAC1:OnSpawnGroup(
   function( SpawnGroup1688 )
-             local unit = GROUP:GetUnit(1)
-             local name = UNIT:GetName()
+             local unit = SpawnGroup1688:GetUnit(1)
+             local name = unit:GetName()
              autolaser:SetRecceLaserCode(name,1688)
              autolaser:SetRecceSmokeColor(name,SMOKECOLOR.Red)
   end
@@ -285,8 +310,8 @@ Spawn_JTAC2:InitLimit(1,0)
 Spawn_JTAC2:InitDelayOn()
 Spawn_JTAC2:OnSpawnGroup(
   function( SpawnGroup1588 )
-             local unit = GROUP:GetUnit(1)
-             local name = UNIT:GetName()
+             local unit = SpawnGroup1588:GetUnit(1)
+             local name = unit:GetName()
              autolaser:SetRecceLaserCode(name,1588)
              autolaser:SetRecceSmokeColor(name,SMOKECOLOR.Green)
   end
@@ -309,7 +334,7 @@ RangeCau2:SetRangeRadius(15)
 RangeCau2:AddBombingTargetGroup(GROUP:FindByName("Russian Forces-1"), 50, false)
 RangeCau2:Start()
 
-local AAWRtargets={"AAWR Range", "AAWR Range-1", "AAWR Range-2", "AAWR Range-3", "AAWR Range-4", "AAWR Range-5", "AAWR Range-6", "AAWR Range-7", "AAWR Range-8", "AAWR Range-9", "AAWR Range-10", "AAWR Range-11", "AAWR Range-11", "AAWR Range-12", "AAWR Range-13", "AAWR Range-14", "NW Target", "N Target", "NE Target", "SE Target", "S Target", "SW Target"}
+local AAWRtargets={"AAWR Range", "AAWR Range-1", "AAWR Range-2", "AAWR Range-3", "AAWR Range-4", "AAWR Range-5", "AAWR Range-6", "AAWR Range-7", "AAWR Range-8", "AAWR Range-9", "AAWR Range-10", "AAWR Range-11", "AAWR Range-12", "AAWR Range-13", "AAWR Range-14", "NW Target", "N Target", "NE Target", "SE Target", "S Target", "SW Target"}
 local strafepit={"AAWR Strafe Pit"}
 AAWR=RANGE:New("AAWR Range")
 AAWR:SetFunkManOn()
@@ -333,10 +358,11 @@ tankerSpeed = 270
 tankerTrackLength=15
 
 ---AWACS-----
--- E-3A Magic 51 - 32,000' 251.000Mhz
+-- E-3A Magic 51 - 32,000' 293.800Mhz
 local auftragAWACS=AUFTRAG:NewAWACS(zoneAWACS:GetCoordinate(), 32000, 300, 125, 40)
 auftragAWACS:SetTACAN(29, "DXS") 
-auftragAWACS:SetRadio(251.000)      
+-- NOTE: 251 MHz may overlap a published airfield/ATC entry; review frequency deconfliction separately.
+auftragAWACS:SetRadio(293.800)      
 local fsAWACS=FLIGHTGROUP:New("Magic")
 fsAWACS:SetDefaultCallsign(CALLSIGN.AWACS.Magic, 5)
 fsAWACS:AddMission(auftragAWACS)
@@ -409,6 +435,25 @@ adminMenu = MENU_MISSION:New( "Admin")
 ----------------spawn zones------------------
 zoneTable= { ZONE:New("DogfightZone"), ZONE:New("BomberZone")}
 
+-- Spawn registry helpers.  Each category stores every spawned GROUP object,
+-- allowing the corresponding "Remove" menu item to clean up all instances.
+local function registerSpawn(registry, spawnedGroup)
+  if spawnedGroup then
+    table.insert(registry, spawnedGroup)
+  end
+  return spawnedGroup
+end
+
+local function destroyRegisteredSpawns(registry)
+  for i = #registry, 1, -1 do
+    local spawnedGroup = registry[i]
+    if spawnedGroup then
+      spawnedGroup:Destroy()
+    end
+    table.remove(registry, i)
+  end
+end
+
 -------------------BVR aircraft - with missiles -------------------------
 bvrTable = {"F-4 BVR", "F-5 BVR","F-15 BVR", "F-16 BVR", "F-18 BVR", "Mig21 BVR","Mig29 BVR" }
 numberOfBVRAircraft = 7
@@ -419,16 +464,13 @@ end
 
 SpawnBVR = {}
 function newBVR(grpname, grpspawn)
-  SpawnBVR[grpname] = grpspawn:SpawnInZone(zoneTable[1],true,3000, 6000 ,nil)
-  text = grpname
-  MESSAGE:New(text.." spawned.",15,Info):ToAll()
+  local spawnedGroup = grpspawn:SpawnInZone(zoneTable[1], true, 3000, 6000, nil)
+  registerSpawn(SpawnBVR, spawnedGroup)
+  MESSAGE:New(grpname.." spawned.",15,Info):ToAll()
 end
 
-local function destroyBVR(grpspawn)
-for k, v in pairs(SpawnBVR) do
-  v:Destroy()
-  k = nil
-end
+local function destroyBVR()
+  destroyRegisteredSpawns(SpawnBVR)
 end
 
 for i=1,numberOfBVRAircraft do
@@ -446,16 +488,13 @@ end
 
 SpawnACM = {}
 function newACM(grpname, grpspawn)
-  SpawnACM[grpname] = grpspawn:SpawnInZone(zoneTable[1],true,3000, 6000 ,nil)
-  text = grpname
-  MESSAGE:New(text.." spawned.",15,Info):ToAll()
+  local spawnedGroup = grpspawn:SpawnInZone(zoneTable[1], true, 3000, 6000, nil)
+  registerSpawn(SpawnACM, spawnedGroup)
+  MESSAGE:New(grpname.." spawned.",15,Info):ToAll()
 end
 
-local function destroyACM(grpspawn)
-for k, v in pairs(SpawnACM) do
-  v:Destroy()
-  k = nil
-end
+local function destroyACM()
+  destroyRegisteredSpawns(SpawnACM)
 end
 
 for i=1,numberOfACMAircraft do
@@ -473,16 +512,13 @@ end
 
 SpawnBomb = {}
 function newBomber(grpname, grpspawn)
-  SpawnBomb[grpname] = grpspawn:SpawnInZone(zoneTable[2],true,3000, 6000 ,nil)
-  text = grpname
-  MESSAGE:New("Scramble fighters, "..text.." detected, BRA 320 for 135 at 22,000 from the Anapa TCN",15,Info):ToAll()
+  local spawnedGroup = grpspawn:SpawnInZone(zoneTable[2], true, 3000, 6000, nil)
+  registerSpawn(SpawnBomb, spawnedGroup)
+  MESSAGE:New("Scramble fighters, "..grpname.." detected, BRA 320 for 135 at 22,000 from the Anapa TCN",15,Info):ToAll()
 end
 
-local function destroyBombers(grpspawn)
-for k, v in pairs(SpawnBomb) do
-  v:Destroy()
-  k = nil
-end
+local function destroyBombers()
+  destroyRegisteredSpawns(SpawnBomb)
 end
 
 for i=1,numberOfBombers do
@@ -502,16 +538,16 @@ end
 
 SAMSpawn = {}
 function newSAMSite(grpname, grpspawn)
-  SAMSpawn[grpname] = grpspawn:Spawn():OptionAlarmStateRed()
-  text = grpname
-  MESSAGE:New(text.." Group Spawned",15,Info):ToAll()
+  local spawnedGroup = grpspawn:Spawn()
+  if spawnedGroup then
+    spawnedGroup:OptionAlarmStateRed()
+    registerSpawn(SAMSpawn, spawnedGroup)
+  end
+  MESSAGE:New(grpname.." Group Spawned",15,Info):ToAll()
 end
 
-local function destroySAM(grpspawn)
-for k, v in pairs(SAMSpawn) do
-  v:Destroy()
-  k = nil
-end
+local function destroySAM()
+  destroyRegisteredSpawns(SAMSpawn)
 end
 
 for i=1,6 do
@@ -526,7 +562,7 @@ function launchJTAC1()
     :InitLimit(1,0)
     :OnSpawnGroup(
       function( SpawnGroup )
-             local unit = group:GetUnit(1)
+             local unit = SpawnGroup:GetUnit(1)
              local name = unit:GetName()
              autolaser:SetRecceLaserCode(name,1688)
              autolaser:SetRecceSmokeColor(name,SMOKECOLOR.Red)
@@ -542,7 +578,7 @@ function launchJTAC2()
     :InitLimit(1,0)
     :OnSpawnGroup(
       function( SpawnGroup )
-             local unit = group:GetUnit(1)
+             local unit = SpawnGroup:GetUnit(1)
              local name = unit:GetName()
              autolaser:SetRecceLaserCode(name,1588)
              autolaser:SetRecceSmokeColor(name,SMOKECOLOR.Green)
@@ -575,27 +611,39 @@ end
 MENU_MISSION_COMMAND:New("Fox On", menuFox,FoxOn)
 
 function FoxOff()
-  foxTrainer:__Stop(1)
-  MESSAGE:New("Fox Trainer Off",15,Info):ToAll()
-  FoxRunning = false
+  if foxTrainer and FoxRunning then
+    foxTrainer:__Stop(1)
+    FoxRunning = false
+    MESSAGE:New("Fox Trainer Off",15,Info):ToAll()
+  else
+    MESSAGE:New("Fox Trainer is already off.",10,Info):ToAll()
+  end
   env.info(FoxRunning)
   env.info("FoxOff")
 end
 MENU_MISSION_COMMAND:New("Fox Off", menuFox,FoxOff)
 
 function SmokeOn()
-  foxTrainer:SetDebugOn()
-  foxTrainer:SetDefaultLaunchAlerts(true)
-  foxTrainer:SetDefaultLaunchMarks(true)
-  MESSAGE:New("Smoke and Launch Information On",15,Info):ToAll()
+  if foxTrainer and FoxRunning then
+    foxTrainer:SetDebugOn()
+    foxTrainer:SetDefaultLaunchAlerts(true)
+    foxTrainer:SetDefaultLaunchMarks(true)
+    MESSAGE:New("Smoke and Launch Information On",15,Info):ToAll()
+  else
+    MESSAGE:New("Start Fox Trainer before enabling smoke/launch alerts.",10,Info):ToAll()
+  end
 end
 MENU_MISSION_COMMAND:New("Smoke and Launch Alerts On", menuFox,SmokeOn)
 
 function SmokeOff()
-  foxTrainer:SetDebugOff()
-  foxTrainer:SetDefaultLaunchAlerts(false)
-  foxTrainer:SetDefaultLaunchMarks(false)
-  MESSAGE:New("Smoke and Launch Information Off",15,Info):ToAll()
+  if foxTrainer and FoxRunning then
+    foxTrainer:SetDebugOff()
+    foxTrainer:SetDefaultLaunchAlerts(false)
+    foxTrainer:SetDefaultLaunchMarks(false)
+    MESSAGE:New("Smoke and Launch Information Off",15,Info):ToAll()
+  else
+    MESSAGE:New("Fox Trainer is not running.",10,Info):ToAll()
+  end
 end
 MENU_MISSION_COMMAND:New("Smoke and Launch Alerts Off", menuFox,SmokeOff)
 
@@ -647,9 +695,8 @@ local function range_1_AR_Zugdidi_reattack()
     SPAWN_1_5:Spawn()
     SPAWN_1_6:Spawn()
 	MESSAGE:New("Armed reconnaissance sighted approaching Zugdidi from Senaki",30,Info):ToAll()
-  else if range_1_menu_AR_Zugdidi_reattack  then 
-	range_1_menu_AR_Zugdidi_reattack:Remove()
-    end
+  elseif range_1_menu_AR_Zugdidi_reattack then
+    range_1_menu_AR_Zugdidi_reattack:Remove()
   end
 end
 
@@ -699,9 +746,8 @@ local function range_2_AR_Ilskiy_reattack()
     SPAWN_2_5:Spawn()
     SPAWN_2_6:Spawn()
 	MESSAGE:New("Armed reconnaissance sighted approaching Il'skiy from the east",30,Info):ToAll()
-  else if range_2_menu_AR_Ilskiy_reattack  then 
-	range_2_menu_AR_Ilskiy_reattack:Remove()
-    end
+  elseif range_2_menu_AR_Ilskiy_reattack then
+    range_2_menu_AR_Ilskiy_reattack:Remove()
   end
 end
 
